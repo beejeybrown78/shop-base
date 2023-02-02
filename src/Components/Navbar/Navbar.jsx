@@ -47,7 +47,7 @@ const Navbar =()=>{
                 </svg>
                 <p className="text-dark  mr-4 ">Список бажань</p>
                 </div>
-                <div className="d-flex flex-row align-items-center cursor-pointer " onClick={handleOpen}>
+                <div className="d-flex flex-row align-items-center cursor-pointer "onClick={() => handleOpen("xxl")}>
                     {totalAmount>0?<span className="rounded-full bg-gray-300 px-2 font-Inter text-sm mr-1">{totalAmount}</span>:  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     strokeWidth="2"
                     stroke="#000"

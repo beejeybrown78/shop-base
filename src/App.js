@@ -7,12 +7,17 @@ import FilteredProducts from "./Components/FiltredProducts/FilteredProducts";
 import SingleProduct from "./Components/FiltredProducts/SingleProduct";
 import Login from "./Components/Login/Login";
 import { useSelector } from "react-redux";
+import OrderDetails from "./Components/OrderDetails/OrderDetails";
+
+
 
 function App() {
   const user = useSelector((state) => state.user.user);
   const { authUser } = user;
 
   return (
+    
+   
     <div className="App">
       <BrowserRouter>
         <Routes>
@@ -22,16 +27,21 @@ function App() {
           ></Route>
 
           <Route
-            path="/filteredProducts/:type"
+            path="/filteredProducts/:type/*"
             element={<FilteredProducts></FilteredProducts>}
           ></Route>
           <Route
             path="/filteredProducts/:type/:id"
             element={<SingleProduct></SingleProduct>}
           ></Route>
+          <Route
+            path="/OrderDetails"
+            element={<OrderDetails></OrderDetails>}
+          ></Route>
         </Routes>
       </BrowserRouter>
     </div>
+   
   );
 }
 

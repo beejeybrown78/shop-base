@@ -1,4 +1,4 @@
-import { Fragment} from "react";
+import { Fragment, useState} from "react";
 import {
   Button,
   Dialog,
@@ -10,20 +10,27 @@ import { useSelector,  useDispatch } from "react-redux";
 import { Tooltip } from "@material-tailwind/react";
 import { removeFromCart } from "../../features/slices/cartSlice";
 
+import { Link } from "react-router-dom";
 
+
+
+
+ 
 const Cart =({openModal, setOpen})=>{
 
     const cart = useSelector((state) =>state.cart.cart);
     const totalPrice = useSelector((state) => state.cart.totalPrice);
 
    const dispatch = useDispatch(); 
- 
-    return (<div>
+  
+    return (<div className="">
         {cart.length > 0 ? (
-          <Fragment>
-            <Dialog
-              className="border-0 outline-0"
+          <Fragment className='modal-dialog-scrollable'>
+            <Dialog 
+              
+              className="border-0 outline-0 s"
               open={openModal}
+            
               handler={() => setOpen(false)}
               animate={{
                 mount: { scale: 1, y: 0 },
@@ -79,25 +86,44 @@ const Cart =({openModal, setOpen})=>{
                           Загальна вартість :{" "}
                             <span className="ml-2">{item.totalPrice}₴</span>
                           </p>
-                          <div className="pt-4">
+                          <div className="flex ">
+                          <div className="pt-4 m">
                             <Tooltip
                               content="Видалити з кошика"
                               placement="bottom"
                             >
-                              <Button
+                              <Button className="mr-2"
                                 onClick={() => dispatch(removeFromCart(item))}
                                 size="sm"
                                 color="red"
-                                ripple={true}
                                 variant="filled"
                               >
                                Видалити
                               </Button>
                             </Tooltip>
                           </div>
+                          <div className="pt-4">
+                          <Link to={"/OrderDetails"}><Button className="mr-2"
+                                size="sm"
+                                color="green"
+                                variant="filled"
+                              >
+                               Замовити
+                              </Button></Link>
+                          </div>
+                         
+                        
+                        
+                          
+                          </div>
+                         
                         </div>
+                       
+                        
                       </div>
                     </div>
+                 
+                  
                   );
                 })}
               </DialogBody>

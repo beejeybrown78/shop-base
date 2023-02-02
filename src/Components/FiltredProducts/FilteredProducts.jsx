@@ -13,6 +13,7 @@ import {
   filterBySize,
 } from "../../features/slices/productsSlice";
 import Footer from "../Footer/Footer";
+import { Link } from "react-router-dom";
 
 
 const FilteredProducts = () => {
@@ -34,12 +35,28 @@ const FilteredProducts = () => {
   const dispatch = useDispatch();
   return(
      <div className="">
-    <h1 className=" bg-dark text-light h2 text-center py-2 font-bold">
+      <div className="bg-dark py-2 ">
+     
+    <h1 className="  text-light h2 text-center font-bold">
             {type}
           </h1>
+          
+      </div>
+      <Link  to={"/"} >
+        <button 
+                  color="white"
+                  size="lg"
+                  variant="danger"
+                  className=" text-primary ml-20 mt-10 border-none  hover:bg-red duration-300 ease-in-out"
+                  onClick={() => dispatch(filterProducts())}>Головна / </button> 
+                   </Link>
+                  
+      
+       
+        
       <div className=" container pt-16">
         <div className="pl-14">
-          
+        
           <div className="d-flex align-item-center justify-content-between py-8 ">
             <div className="flex items-center">
               {genderButtons.map((item, index) => {
@@ -72,6 +89,7 @@ const FilteredProducts = () => {
       <Dropdown.Menu>
       {colorButtons.map((item, index) => {
                     return (
+                     
                       <Dropdown.Item
                         style={{ color: item }}
                         key={index}

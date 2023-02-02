@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Tooltip, Button } from "@material-tailwind/react";
 import { addToCart } from "../../features/slices/cartSlice";
 import { useDispatch } from "react-redux";
+
+
+
+
+
 
 const SingleProduct = () => {
   const product = useSelector((state) => state.products.singleProduct);
@@ -11,9 +16,12 @@ const SingleProduct = () => {
   const productColor = product[0].color[0];
   const [size, setSize] = useState(productSize);
   const [color, setColor] = useState(productColor);
+  
+
 
   const { id } = useParams();
   const dispatch = useDispatch();
+
 
   return (
     <div>
@@ -21,7 +29,16 @@ const SingleProduct = () => {
         .filter((product) => product.id === id)
         .map((item, index) => {
           return (
+            <>
+             <h1 className=" bg-dark text-light h2 text-center py-2 font-bold">
+              {item.name}
+            </h1>
+            <Link to={`/`}  className=" ml-20 mt-20 border-none text-primary   hover:bg-red duration-300 ease-in-out">Головна / </Link>
+            <Link to={`/FilteredProducts/${item.type}`} className="  mt-20  border-none text-blue text-primary hover:bg-red duration-300 ease-in-out">{item.type} <span className=""> / </span></Link>
+            <Link to="" className="  mt-20  border-none text-blue  text-dark hover:bg-red duration-300 ease-in-out">{item.name} /</Link>
+                
             <div key={index} className="flex justify-center items-center py-10">
+              
               <div className="pl-44 grow-[2]">
                 <img
                   className="h-[550px] rounded-lg"
@@ -142,8 +159,10 @@ const SingleProduct = () => {
                     </Button>
                   </Tooltip>
                 </div>
+               
               </div>
             </div>
+            </>
           );
         })}
     </div>
