@@ -1,89 +1,73 @@
-import React from "react";
-import { Input } from "@material-tailwind/react";
-import Footer from "../Footer/Footer";
+import React from 'react'
+import {Formik, Form} from 'formik'
+import { TextField } from './TextField'
 import { Button } from "react-bootstrap";
+import Footer from "../Footer/Footer";
 import { useSelector} from "react-redux";
-import { useState } from 'react';
+import * as Yup from "yup";
 
 
+export const OrderDetails = () => {
+  const validate = Yup.object({
+    firstName: Yup.string()
+    .max(12,"Має  бути не більше 12 символів")
+    .required("необхідно вказати і'мя"),
+    LastName: Yup.string().max(12,"Має  бути не більше 12 символів")
+    .required("необхідно вказати прізвище"),
+    email: Yup.string().email("електронна пошта недійсна")
+    .required("необхідно вказати"),
+    phone: Yup.string().max(12,"Має бути не менше 12 символів").min(12,"Має бути не менше 12 символів")
+    .required("необхідно вказати номер телефону"),
+    adress: Yup.string().min(12,"")
+    .required("необхідно вказати адресу замовлення"), 
+    
+  })
 
-const OrderDetails = () =>{
-  const initialState = {
-    name:"",
-    password:"",
-    number:"",
-    adress:"",
-
-};
   const totalPrice = useSelector((state) => state.cart.totalPrice);
-  const [values, setValues] = useState(initialState);
-  
-  const onChange = (e=>{
-    const{name, value} =e.target
-    setValues({...values, [name]:value})
-})
 
-    return(
-      <>
-<div className="h-100vh ">
-<h1 className=" bg-dark text-light h2 text-center py-2 font-bold">
+
+  return (
+    <>
+    <Formik
+      initialValues={{
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      }}
+      validationSchema={validate}
+      onSubmit={values => {
+        console.log(values)
+        alert('Дякуємо за замовлення')
+      }}
+    >
+    
+     {formik=>(
+      <div>
+        <h1 className=" bg-dark text-light h2 text-center py-2 font-bold mb-12">
              Оформлення замовлення
             </h1>
-            <div className="mt-20">
-            <div className="justify-center align-center flex w-72 flex-col gap-6 m-auto">
-            <Input className='relative' label="Iм'я" 
-                size="lg"
-                type="text " 
-                name="name"
-                value={values.name} 
-                onChange={onChange}
-                  />
-                
-        <Input className='relative' 
-            label="Пароль" 
-            size="lg"
-            type="password"
-            name="password"
-            maxlength ="15"
-            x-moz-errormessage="вфівфівфівіф"
-
             
-            value={values.password} 
-            onChange={onChange}
-               />
-              
-          <Input 
-            label="телефон" 
-            size="lg" 
-            type="text "
-            name="number"
-            value={values.number}
-            onChange={onChange}
-             />
-              <Input 
-            label="адреса замовлення " 
-            size="lg" 
-            type="text "
-            name="adress"
-            value={values.adress}
-            onChange={onChange}
-             />
-            <span className="ml-2 text-danger text-xl" >{totalPrice}₴</span>
-            <Button onClick={() =>(totalPrice!==0 && alert("дякуємо за замовлення"))}
-            className="bg-dark text-light text-lg p-2"
-            size="sm"
-             variant="filled">Оформити замовлення</Button>
-            </div>
-            <div></div>
-            </div>
-            
-    </div>
-    <div  className="mt-40">
-    <Footer></Footer>
-    </div>
-    
- 
-   </>
-    )
+            <Form>
+              <TextField  label="І'мя" name="firstName" type="text"/>
+              <TextField label="Прізвище" name="LastName" type="text"/>
+              <TextField label="Email " name="email" type="email"/>
+              <TextField label="Телефон " name="phone" type="Phone"/>
+              <TextField label="адреса замовлення" name="adress" type="text"/> 
+             <div className="flex flex-col items-center">
+             <span className="mr-60 text-danger text-xl" >{totalPrice}₴</span>
+             </div>
+              <div className='flex flex-col items-center mt-4 mb-10'>
+              <Button type="submit" className="bg-dark text-light text-lg p-2" size="sm"
+               variant="filled">Оформити замовлення</Button></div>
+            </Form>
+      </div>
+     )
+     }
+    </Formik>
+    <Footer className="pb-20"/>
+    </>
+  )
 }
-export default OrderDetails
+ export default OrderDetails
