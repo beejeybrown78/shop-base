@@ -50,11 +50,11 @@ export const OrderDetails = () => {
             </h1>
             
             <Form>
-              <TextField  label="І'мя" name="firstName" type="text"/>
+              <TextField  label="Ім'я" name="firstName" type="text"/>
               <TextField label="Прізвище" name="LastName" type="text"/>
               <TextField label="Email " name="email" type="email"/>
               <TextField label="Телефон " name="phone" type="Phone"/>
-              <TextField label="адреса замовлення" name="adress" type="text"/> 
+              <TextField label="Адреса замовлення" name="adress" type="text"/> 
              <div className="flex flex-col items-center">
              <span className="mr-60 text-danger text-xl" >{totalPrice}₴</span>
              </div>
