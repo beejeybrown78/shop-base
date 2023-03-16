@@ -3,11 +3,14 @@ import {Formik, Form} from 'formik'
 import { TextField } from './TextField'
 import { Button } from "react-bootstrap";
 import Footer from "../Footer/Footer";
-import { useSelector} from "react-redux";
+import { useSelector,} from "react-redux";
 import * as Yup from "yup";
 
 
+
+
 export const OrderDetails = () => {
+  
   const validate = Yup.object({
     firstName: Yup.string()
     .max(12,"Має  бути не більше 12 символів")
@@ -24,23 +27,26 @@ export const OrderDetails = () => {
   })
 
   const totalPrice = useSelector((state) => state.cart.totalPrice);
-
-
+  
+ 
   return (
     <>
     <Formik
       initialValues={{
         firstName: '',
-        lastName: '',
+        LastName: '',
+        phone : '',
         email: '',
-        password: '',
-        confirmPassword: ''
+        adress:'',
+        
       }}
       validationSchema={validate}
-      onSubmit={values => {
-        console.log(values)
-        alert('Дякуємо за замовлення')
-      }}
+    
+        onSubmit = {(values, {resetForm} )=> {
+        console.log(JSON.stringify(values, null, 2))
+        resetForm();
+        alert('Дякуємо за покупку')
+        }}
     >
     
      {formik=>(
@@ -48,18 +54,19 @@ export const OrderDetails = () => {
         <h1 className=" bg-dark text-light h2 text-center py-2 font-bold mb-12">
              Оформлення замовлення
             </h1>
+           
             
             <Form>
               <TextField  label="Ім'я" name="firstName" type="text"/>
               <TextField label="Прізвище" name="LastName" type="text"/>
               <TextField label="Email " name="email" type="email"/>
-              <TextField label="Телефон " name="phone" type="Phone"/>
+              <TextField label="Телефон " name="phone" type="number"/>
               <TextField label="Адреса замовлення" name="adress" type="text"/> 
              <div className="flex flex-col items-center">
              <span className="mr-60 text-danger text-xl" >{totalPrice}₴</span>
              </div>
               <div className='flex flex-col items-center mt-4 mb-10'>
-              <Button type="submit" className="bg-dark text-light text-lg p-2" size="sm"
+              <Button  type="submit" className="bg-dark text-light text-lg p-2" size="sm"
                variant="filled">Оформити замовлення</Button></div>
             </Form>
       </div>
